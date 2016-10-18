@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\Json;
 
 /**
  * PersonInformationController implements the CRUD actions for PersonInformation model.
@@ -73,7 +74,7 @@ class PersonInformationController extends Controller
             ])->one();
         if ($foundObject) {
             $result['status'] = "success";
-            $result['data'] = \yii\helpers\JSON::encode($foundObject);
+            $result['data'] = JSON::encode($foundObject);
         }
         return $result;
     }
