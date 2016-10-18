@@ -115,8 +115,7 @@ EOL;
         }else{
             $mainCommand = "mysql  --local-infile --login-path=import_local --database=cut8_records -e '$sqlCommand'";
         }
-        $ret = shell_exec($mainCommand);
-        \Yii::warning($ret);
+        exec($mainCommand);
         \Yii::warning($sqlCommand);
         \Yii::warning($mainCommand);
 
