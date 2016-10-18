@@ -101,7 +101,7 @@ class UploadCsvFileForm extends Model
     	FIELDS TERMINATED BY "%s"
     	LINES TERMINATED BY "%s"
     	IGNORE 0 LINES
-    	(title , firstname , lastname , mobilenumber , telephone , flatNumber , address , address1 , address2 , address3 , address4 , address5 , postcode , amount , reasonForLoan , emailAddress , dateOfBirth)
+    	(title , firstname , lastname , mobilenumber , telephone , flatNumber , address , address1 , address2 , address3 , address4 , address5 , postcode , amount , reasonForLoan , emailAddress , dateOfBirth);
 EOL;
 		$tempContainerArr = explode("=", Yii::$app->db->dsn);
         $databaseName = end( $tempContainerArr  );
