@@ -50,12 +50,11 @@ EOL;
         $databasePassword = Yii::$app->db->password;
         $sqlCommand = sprintf($sqlCommand, $myTemp, ',', '\n');
 
-        $mainCommand="";
-        if (YII_DEBUG) {
-            $mainCommand = "mysql --local-infile --user=$databaseUsername --password=$databasePassword --database=$databaseName -e '$sqlCommand'";
-        }else{
-            $mainCommand = "mysql  --local-infile --login-path=import_local --database=cut8_records -e '$sqlCommand'";
-        }
+        $mainCommand = "mysql --local-infile --user=$databaseUsername --password=$databasePassword --database=$databaseName -e '$sqlCommand'";
+        // if (YII_DEBUG) {
+        // }else{
+        //     $mainCommand = "mysql  --local-infile --login-path=import_local --database=cut8_records -e '$sqlCommand'";
+        // }
         exec($mainCommand);
         unlink($myTemp);
         \Yii::warning($sqlCommand);
