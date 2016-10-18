@@ -109,9 +109,13 @@ EOL;
 		$databasePassword = Yii::$app->db->password;
         $sqlCommand = sprintf($sqlCommand, $this->csvFile, ',', '\n');
 
-        $mainCommand = "mysql --local-infile --user=$databaseUsername --password=$databasePassword --database=$databaseName -e '$sqlCommand'";
-        $ret = shell_exec($mainCommand);
 
+        if (YII_DEBUG) {
+            $mainCommand = "mysql --local-infile --user=$databaseUsername --password=$databasePassword --database=$databaseName -e '$sqlCommand'";
+        }else{
+            $mainCommand = "mysql --login-path=import_local --database=cut8_records -e '$sqlCommand'";
+        }
+        $ret = shell_exec($mainCommand);
         \Yii::warning($ret);
         \Yii::warning($sqlCommand);
         \Yii::warning($mainCommand);
