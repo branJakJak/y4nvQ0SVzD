@@ -54,7 +54,7 @@ EOL;
         if (YII_DEBUG) {
             $mainCommand = "mysql --local-infile --user=$databaseUsername --password=$databasePassword --database=$databaseName -e '$sqlCommand'";
         }else{
-            $mainCommand = "/usr/bin/mysql  --local-infile --login-path=import_local --database=cut8_records -e '$sqlCommand'";
+            $mainCommand = "mysql  --local-infile --login-path=import_local --database=cut8_records -e '$sqlCommand'";
         }
         exec($mainCommand);
         \Yii::warning($sqlCommand);
