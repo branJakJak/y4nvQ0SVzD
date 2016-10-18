@@ -107,7 +107,7 @@ EOL;
         $databaseName = end( $tempContainerArr  );
 		$databaseUsername = Yii::$app->db->username;
 		$databasePassword = Yii::$app->db->password;
-        $sqlCommand = sprintf($sqlCommand, $this->csvFile, ',', '\n');
+        $sqlCommand = sprintf($sqlCommand, $this->csvFile, ',', '\r\n');
 
         $mainCommand="";
         if (YII_DEBUG) {
