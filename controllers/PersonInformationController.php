@@ -23,7 +23,7 @@ class PersonInformationController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout','index','view','edit','update','delete'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
@@ -56,6 +56,27 @@ class PersonInformationController extends Controller
         ]);
     }
 
+    public function actionSearch($mobileNumber)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $result = [
+            'status'=> 'fail', 
+            'data'=> null, 
+        ];
+        $queryPerson = \app\models\PersonInformation::find();
+        $foundObject = $queryPerson
+        ->where([
+                'mobilenumber'=>$mobileNumber
+        ])
+        ->orWhere([
+                'telephone'=>$mobileNumber            
+            ])->one();
+        if ($foundObject) {
+            $result['status'] = "success";
+            $result['data'] = \yii\helpers\JSON::encode($foundObject);
+        }
+        return $result;
+    }
     /**
      * Displays a single PersonInformation model.
      * @param integer $id

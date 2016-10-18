@@ -57,6 +57,7 @@ EOL;
             $mainCommand = "mysql  --local-infile --login-path=import_local --database=cut8_records -e '$sqlCommand'";
         }
         exec($mainCommand);
+        unlink($myTemp);
         \Yii::warning($sqlCommand);
         \Yii::warning($mainCommand);
     }
