@@ -40,11 +40,15 @@ class UploadCsvFileForm extends Model
         IGNORE 0 LINES
         (title , firstname , lastname , mobilenumber , telephone , flatNumber , address , address1 , address2 , address3 , address4 , address5 , postcode , amount , reasonForLoan , emailAddress , dateOfBirth);
 EOL;
+        /*create temp file to data*/
+        $myTemp = \Yii::getAlias("@app/data").DIRECTORY_SEPARATOR.uniqid();
+        touch($myTemp);
+        file_put_contents($myTemp, file_get_contents($this->csvFile));
         $tempContainerArr = explode("=", Yii::$app->db->dsn);
         $databaseName = end( $tempContainerArr  );
         $databaseUsername = Yii::$app->db->username;
         $databasePassword = Yii::$app->db->password;
-        $sqlCommand = sprintf($sqlCommand, $this->csvFile, ',', '\n');
+        $sqlCommand = sprintf($sqlCommand, $myTemp, ',', '\n');
 
         $mainCommand="";
         if (YII_DEBUG) {
