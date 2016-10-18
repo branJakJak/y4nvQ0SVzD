@@ -26,7 +26,7 @@ class PersonInformationController extends Controller
                 'only' => ['logout','index','view','edit','update','delete'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','logout','index','view','edit','update','delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
