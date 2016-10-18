@@ -32,96 +32,28 @@ class UploadCsvFileForm extends Model
     }
     public function import()
     {
-        $this->planB();
-    	//open csv file , 
-    	// $fileRes = fopen($this->csvFile, "r+");
-    	// $dataCollection = [];
-    	// while (!feof($fileRes)) {
-    	// 	$currentCsvLine = fgetcsv($fileRes);
-     //        $dataCollection[] = [
-     //             $currentCsvLine[0],
-     //             $currentCsvLine[1],
-     //             $currentCsvLine[2],
-     //             $currentCsvLine[3],
-     //             $currentCsvLine[4],
-     //             $currentCsvLine[5],
-     //             $currentCsvLine[6],
-     //             $currentCsvLine[7],
-     //             $currentCsvLine[8],
-     //             $currentCsvLine[9],
-     //             $currentCsvLine[10],
-     //             $currentCsvLine[11],
-     //             $currentCsvLine[12],
-     //             $currentCsvLine[13],
-     //             $currentCsvLine[14],
-     //             $currentCsvLine[15],
-     //             $currentCsvLine[16]
-     //        ];
-
-    	// }
-    	// fclose($fileRes);
-    	// //build batch insert
-     //    Yii::$app
-     //    ->db
-     //    ->createCommand()
-     //    ->batchInsert(
-     //        \app\models\PersonInformation::tableName() , 
-     //        [
-     //            'title' ,
-     //            'firstname' ,
-     //            'lastname' ,
-     //            'mobilenumber' ,
-     //            'telephone' ,
-     //            'flatNumber' ,
-     //            'address' ,
-     //            'address1' ,
-     //            'address2' ,
-     //            'address3' ,
-     //            'address4' ,
-     //            'address5' ,
-     //            'postcode' ,
-     //            'amount' ,
-     //            'reasonForLoan' ,
-     //            'emailAddress' ,
-     //            'dateOfBirth'
-     //        ],
-     //        $dataCollection
-     //    )
-     //    ->execute();
-    	//execute 
-    	//done
-    	//title , firstname , lastname , mobilenumber , telephone , flatNumber , address , address1 , address2 , address3 , address4 , address5 , postcode , amount , reasonForLoan , emailAddress , dateOfBirth
-    }
-    public function planB()
-    {
-//     	/*import here*/
         $sqlCommand = <<<EOL
-    	LOAD DATA LOCAL INFILE "%s"
-    	INTO TABLE person_info
-    	FIELDS TERMINATED BY "%s"
-    	LINES TERMINATED BY "%s"
-    	IGNORE 0 LINES
-    	(title , firstname , lastname , mobilenumber , telephone , flatNumber , address , address1 , address2 , address3 , address4 , address5 , postcode , amount , reasonForLoan , emailAddress , dateOfBirth);
+        LOAD DATA LOCAL INFILE "%s"
+        INTO TABLE person_info
+        FIELDS TERMINATED BY "%s"
+        LINES TERMINATED BY "%s"
+        IGNORE 0 LINES
+        (title , firstname , lastname , mobilenumber , telephone , flatNumber , address , address1 , address2 , address3 , address4 , address5 , postcode , amount , reasonForLoan , emailAddress , dateOfBirth);
 EOL;
-		$tempContainerArr = explode("=", Yii::$app->db->dsn);
+        $tempContainerArr = explode("=", Yii::$app->db->dsn);
         $databaseName = end( $tempContainerArr  );
-		$databaseUsername = Yii::$app->db->username;
-		$databasePassword = Yii::$app->db->password;
+        $databaseUsername = Yii::$app->db->username;
+        $databasePassword = Yii::$app->db->password;
         $sqlCommand = sprintf($sqlCommand, $this->csvFile, ',', '\n');
 
         $mainCommand="";
         if (YII_DEBUG) {
-            $mainCommand = "/usr/local/bin/php --local-infile --user=$databaseUsername --password=$databasePassword --database=$databaseName -e '$sqlCommand'";
+            $mainCommand = "mysql --local-infile --user=$databaseUsername --password=$databasePassword --database=$databaseName -e '$sqlCommand'";
         }else{
-            $mainCommand = "/usr/local/bin/php  --local-infile --login-path=import_local --database=cut8_records -e '$sqlCommand'";
+            $mainCommand = "/usr/bin/mysql  --local-infile --login-path=import_local --database=cut8_records -e '$sqlCommand'";
         }
         exec($mainCommand);
         \Yii::warning($sqlCommand);
         \Yii::warning($mainCommand);
-
-    	//insert in the database
-    	// done
-    	# code...
     }
-
 }
