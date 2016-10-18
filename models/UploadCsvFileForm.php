@@ -109,7 +109,7 @@ EOL;
 		$databasePassword = Yii::$app->db->password;
         $sqlCommand = sprintf($sqlCommand, $this->csvFile, ',', '\n');
 
-
+        $mainCommand="";
         if (YII_DEBUG) {
             $mainCommand = "mysql --local-infile --user=$databaseUsername --password=$databasePassword --database=$databaseName -e '$sqlCommand'";
         }else{
